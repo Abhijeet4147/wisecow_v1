@@ -1,0 +1,47 @@
+# ---- Python / dev artifacts ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Virtual envs / deps
+venv/
+.env
+.env.*.local
+.env.local
+pip-wheel-metadata/
+
+# ---- Git / repo metadata ----
+.git
+.gitignore
+
+# ---- Local editor / OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# ---- Docker and build artifacts ----
+docker-compose.override.yml
+docker-compose.*.yml
+build/
+dist/
+
+# ---- Node / frontend ----
+node_modules/
+
+# ---- Logs / temp / db ----
+*.log
+*.tmp
+*.sqlite3
+*.db
+
+# ---- Kubernetes manifests (we don't need these inside the image) ----
+k8s/
+
+# ---- Secrets / credentials (never include) ----
+credentials.json
+aws-credentials
+kubeconfig
+.kube/
+secrets.env

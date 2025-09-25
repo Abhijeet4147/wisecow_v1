@@ -1,0 +1,66 @@
+# Byte-compiled / build
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.egg
+*.egg-info/
+dist/
+build/
+*.whl
+
+# Virtualenv / environment
+venv/
+.env
+.env.*.local
+.env.local
+
+# Pytest / coverage
+htmlcov/
+.coverage
+.coverage.*
+.pytest_cache/
+
+# Python packaging
+pip-wheel-metadata/
+pip-log.txt
+
+# SQLite / local DBs
+*.sqlite3
+*.db
+
+# Logs
+*.log
+
+# Docker-related (keep manifests; ignore local overrides)
+docker-compose.override.yml
+docker-compose.*.yml
+
+# VSCode / JetBrains / IDE
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Node (if any frontend or tools)
+node_modules/
+
+# Build outputs
+dist/
+build/
+
+# Temporary files
+*.tmp
+*.swp
+*.swo
+
+# Secret / credentials (should not be committed)
+credentials.json
+aws-credentials
+kubeconfig
+.kube/
+secrets.env
