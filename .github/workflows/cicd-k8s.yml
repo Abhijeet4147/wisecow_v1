@@ -43,7 +43,7 @@ jobs:
 
       - name: Deploy to Minikube (Windows)
         if: runner.os == 'Windows'
-        shell: pwsh
+        shell: powershell
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
