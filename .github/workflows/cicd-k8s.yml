@@ -1,4 +1,4 @@
-name: CI/CD - Wisecow -> Local Minikube (self-hosted)
+name: CI/CD - Wisecow -> Kubernetes (self-hosted)
 
 on:
   push:
@@ -8,14 +8,13 @@ env:
   # DockerHub repo (from GitHub Secrets)
   IMAGE_REPO: ${{ secrets.DOCKERHUB_USERNAME }}/wisecow
 
-  # Kubernetes deployment details (static values, not secrets)
+  # Kubernetes deployment details
   K8S_NAMESPACE: wisecow
-  DEPLOYMENT_NAME: wisecow 
+  DEPLOYMENT_NAME: wisecow
 
 jobs:
   build-and-deploy:
-    runs-on: self-hosted   # 👈 will use your local runner (must be online)
-
+    runs-on: self-hosted   #  your runner OR any other self-hosted
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -40,8 +39,23 @@ jobs:
             ${{ env.IMAGE_REPO }}:latest
             ${{ env.IMAGE_REPO }}:${{ github.sha }}
 
-      - name: Deploy to Minikube
-        shell: bash 
+      # ---- Cross-platform deploy ----
+
+      - name: Deploy to Minikube (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        env:
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          Write-Host "Updating deployment image to $env:IMAGE_REPO:$env:IMAGE_TAG"
+          kubectl config current-context
+          kubectl -n $env:K8S_NAMESPACE set image deployment/$env:DEPLOYMENT_NAME `
+            $env:DEPLOYMENT_NAME=$env:IMAGE_REPO:$env:IMAGE_TAG --record
+          kubectl -n $env:K8S_NAMESPACE rollout status deployment/$env:DEPLOYMENT_NAME --timeout=120s
+
+      - name: Deploy to Minikube (Linux)
+        if: runner.os != 'Windows'
+        shell: bash
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
