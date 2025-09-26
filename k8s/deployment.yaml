@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: wisecow-deployment
+  name: wisecow             # 👈 changed from wisecow-deployment
   namespace: wisecow
   labels:
     app: wisecow
@@ -16,8 +16,8 @@ spec:
         app: wisecow
     spec:
       containers:
-        - name: wisecow
-          image: wisecow:local   # later replace with registry image
+        - name: wisecow     # 👈 must match DEPLOYMENT_NAME in workflow
+          image: abhijeet4147/wisecow:latest   # 👈 DockerHub repo + image
           ports:
             - containerPort: 3000
           readinessProbe:
@@ -32,3 +32,4 @@ spec:
               port: 3000
             initialDelaySeconds: 10
             periodSeconds: 20
+          imagePullPolicy: Always              # 👈 ensures always pulling new image
