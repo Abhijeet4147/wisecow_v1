@@ -41,6 +41,7 @@ jobs:
             ${{ env.IMAGE_REPO }}:${{ github.sha }}
 
       - name: Deploy to Minikube
+        shell: bash 
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
