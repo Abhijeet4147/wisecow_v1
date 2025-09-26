@@ -47,11 +47,11 @@ jobs:
         env:
           IMAGE_TAG: ${{ github.sha }}
         run: |
-          Write-Host "Updating deployment image to $env:IMAGE_REPO:$env:IMAGE_TAG"
+          Write-Host "Updating deployment image to ${env:IMAGE_REPO}:${env:IMAGE_TAG}"
           kubectl config current-context
-          kubectl -n $env:K8S_NAMESPACE set image deployment/$env:DEPLOYMENT_NAME `
-            $env:DEPLOYMENT_NAME=$env:IMAGE_REPO:$env:IMAGE_TAG --record
-          kubectl -n $env:K8S_NAMESPACE rollout status deployment/$env:DEPLOYMENT_NAME --timeout=120s
+          kubectl -n ${env:K8S_NAMESPACE} set image deployment/${env:DEPLOYMENT_NAME} `
+            ${env:DEPLOYMENT_NAME}=${env:IMAGE_REPO}:${env:IMAGE_TAG} --record
+          kubectl -n ${env:K8S_NAMESPACE} rollout status deployment/${env:DEPLOYMENT_NAME} --timeout=120s
 
       - name: Deploy to Minikube (Linux)
         if: runner.os != 'Windows'
